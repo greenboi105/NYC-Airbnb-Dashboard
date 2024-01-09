@@ -17,6 +17,7 @@ px.set_mapbox_access_token(API_KEY)
 # Load data into CSV 
 url = 'https://raw.githubusercontent.com/greenboi105/python_nyc/main/AB_NYC_2019.csv'
 airbnb = pd.read_csv(url)
+
 prices = airbnb[airbnb['price'] < 500]
 regions = prices["neighbourhood_group"].sort_values().unique()
 
@@ -39,8 +40,9 @@ colors = {
     'text': '#5A5A5A'
 }
 
-prompt_description = """Analysis of factors influencing prices of Airbnb rentals in New York City. New York City is one of the most global cities in the world, and attracts tenants from all corners of the globe.
-                     """
+prompt_description = """
+    Analysis of factors influencing prices of Airbnb rentals in New York City. New York City is one of the most global cities in the world, and attracts tenants from all corners of the globe.
+"""
 
 # The structure of the app is a tree
 app.layout = html.Div(children=[
@@ -120,8 +122,11 @@ app.layout = html.Div(children=[
     Output("apartment-distribution", "figure"),
     Input("region-filter", "value"),
 )
-def update_charts(region):
 
+def update_charts(region):
+    """
+    Function to update chart based on filtering on borough selected using dropdown menu.
+    """
     if region == "Any": return px.scatter(airbnb, x='longitude', y='latitude', color='room_type', title="Airbnb Distribution in NYC", template="plotly_dark", height=700).update(layout=dict(title=dict(x=0.5))).update_yaxes(scaleanchor="x", scaleratio=1,)
 
     filtered_data = airbnb[airbnb['neighbourhood_group'] == region]
