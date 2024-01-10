@@ -32,18 +32,19 @@ top_host_df=pd.DataFrame(top_host)
 top_host_df.reset_index(inplace=True)
 top_host_df.rename(columns={'host_id':'Host_ID', 'count':'P_Count'}, inplace=True)
 
+avg_availability = airbnb.groupby(['neighbourhood_group'])['availability_365'].mean()
+avg_availability_df = pd.DataFrame(avg_availability).reset_index()
+
 # Plots
 neighbourhood_distribution = px.scatter_mapbox(prices, lon='longitude', lat='latitude', color='price', template="plotly_dark", title="Prices in the Five Boroughs", height=700, color_continuous_scale="portland").update(layout=dict(title=dict(x=0.5)))
 
-density_distribution = px.violin(prices, x='neighbourhood_group', y='price', color='neighbourhood_group',box=True, title='Price Distribution of Neighbourhood Groups', template="plotly_dark", height=700).update(layout=dict(title=dict(x=0.5)))
-
 neighbourhood_group = px.scatter_mapbox(airbnb, lon='longitude', lat='latitude', color='availability_365', title="Availability in The Five Boroughs", template="plotly_dark", height=700, color_continuous_scale="delta", labels=dict(availability_365="Days Available Per Year")).update(layout=dict(title=dict(x=0.5)))
 
-neighbourhood_pricing = px.scatter(airbnb, x="room_type", y="price", color="neighbourhood_group", title="Room Type and Neighbourhood Pricing", template="plotly_dark", height=700).update(layout=dict(title=dict(x=0.5)))
+neighbourhood_pricing = px.box(airbnb, x="room_type", y="price", color="neighbourhood_group", title="Room Type and Neighbourhood Pricing", template="plotly_dark", height=700).update(layout=dict(title=dict(x=0.5)))
 
-price_distribution = px.histogram(airbnb, x="price", title="Distribution of Airbnb Prices in NYC", color="neighbourhood_group", marginal='box', template="plotly_dark", height=700).update(layout=dict(title=dict(x=0.5)))
+price_distribution = px.histogram(prices, x="price", title="Distribution of Airbnb Prices in NYC", color="neighbourhood_group", marginal='box', template="plotly_dark", height=700).update(layout=dict(title=dict(x=0.5)))
 
-host_plot = px.bar(top_host_df, [str(host) for host in top_host_df["Host_ID"].unique()], y='P_Count', color="P_Count", title="Host IDs with Most Rentals", template="plotly_dark", labels=dict(x="Host Ids", P_Count="Available Listings"), height=700).update(layout=dict(title=dict(x=0.5)))
+availability_plot = px.bar(avg_availability_df, color="neighbourhood_group", x="neighbourhood_group", y="availability_365", template="plotly_dark")
 
 colors = {
     'background': '#111111',
@@ -123,13 +124,8 @@ app.layout = html.Div(children=[
     ),
 
     dcc.Graph(
-        id='example-graph2',
-        figure=density_distribution
-    ), 
-
-    dcc.Graph(
-        id='host-plot',
-        figure=host_plot
+        id="availability-plot",
+        figure=availability_plot
     )
 ])
 
