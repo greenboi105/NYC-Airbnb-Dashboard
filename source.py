@@ -71,11 +71,6 @@ app.layout = html.Div(children=[
             }
         ),
 
-        html.H4(children='Analysis of NYC Airbnb Prices: Designed by Jerry Y. 💻', style={
-            'textAlign': 'center',
-            'color': colors['text']
-        }),
-
         html.P(children=prompt_description, style={
             'textAlign': 'center',
             'color': colors['text']
