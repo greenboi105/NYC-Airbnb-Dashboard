@@ -4,9 +4,9 @@ Data visualization of historical Airbnb rental prices in New York City.
 
 ![Alt text](snapshot.png)
 
-Applet is made using primarily Python and the Dash library, with some elements of CSS and Bootstrap. The Mapbox API is used to overlay Airbnb points over a map of New York. Website is deploted using Heroku.
+Applet is made using primarily Python and the Dash library, with some elements of CSS and Bootstrap. The Mapbox API is used to overlay Airbnb points over a map of New York. Website is deployed using Heroku.
 
-Plots and Information Displayed:
+## Plots and Information Displayed
 
 1. The first plot uses the Mapbox API along with the longitude and latitude of the various Airbnb rentals to overlay points of various price across New York City. This allows the viewer to obtain an impression of the general pricing of rentals across the five boroughs.
 
