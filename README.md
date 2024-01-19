@@ -24,6 +24,6 @@ Applet is made using primarily Python and the Dash library, with some elements o
 
 5. **Histogram** - We have a plot for the general pricing of the boroughs overall, regardless of the type of rental.
 
-6. **Bar Plot** - We can compare the average yearly availability across the boroughs, which can provide some insight into how competitive the rental market is in the different areas.
+6. **Bar Chart** - We can compare the average yearly availability across the boroughs, which can provide some insight into how competitive the rental market is in the different areas.
 
 Link to visualization: **https://nycairbnbapp.herokuapp.com/**
